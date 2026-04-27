@@ -1,0 +1,19 @@
+services:
+  free-claude-code:
+    build: .
+    image: ghcr.io/yangwudong/free-claude-code-docker:latest
+    container_name: free-claude-code
+    ports:
+      - "8082:8082"
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      MESSAGING_PLATFORM: "none"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8082/v1/models')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

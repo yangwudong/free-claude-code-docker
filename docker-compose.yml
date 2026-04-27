@@ -6,7 +6,8 @@ services:
     ports:
       - "8082:8082"
     env_file:
-      - .env
+      - path: .env
+        required: true
     environment:
       MESSAGING_PLATFORM: "none"
     restart: unless-stopped
